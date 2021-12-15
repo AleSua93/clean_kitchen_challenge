@@ -2,7 +2,8 @@ import { DAYS } from '../constants';
 import sampleJson from '../mocks/random-orders.json';
 import { Order } from '../models';
 
-export const fetchData = (): Promise<Array<any>> => {
+export const fetchData = async (): Promise<Array<any>> => {
+  // TODO fetch the actual data here
   return Promise.resolve(sampleJson);
 }
 
