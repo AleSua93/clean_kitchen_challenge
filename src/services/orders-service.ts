@@ -3,7 +3,7 @@ import sampleJson from '../mocks/random-orders.json';
 import { Order } from '../models';
 
 export const fetchData = async (): Promise<Array<any>> => {
-  // TODO fetch the actual data here
+  // TODO fetch the actual data here using fetch or axios or whatever
   return Promise.resolve(sampleJson);
 }
 
@@ -15,9 +15,9 @@ export const placeOrder = (order: Order) => {
  * Returns the available times to place an order in.
  * This is the most logic-heavy function in the challenge, so that's why I'm
  * documenting it :)
- * @constructor
  * @param {Order[]} orders - Array of all existing orders
  * @param {string} date - The selected date, in YYYY-MM-DD format
+ * @returns {Array<string>} - The available times for that date
  */
 export const getAvailableTimes = (orders: Order[], date: string) => {
   // Get an object with a times as keys and # of orders as value, for the given date

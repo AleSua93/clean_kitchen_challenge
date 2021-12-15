@@ -9,10 +9,12 @@ function OrdersForm() {
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("default");
 
+  // Fetch orders data on initial load only
   useEffect(() => {
     fetchData().then(setOrders);
   }, []);
 
+  // When the selected date changes, fetch the available times
   useEffect(() => {
     const availableTimes = getAvailableTimes(orders, date);
 
