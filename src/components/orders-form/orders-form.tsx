@@ -7,7 +7,7 @@ function OrdersForm() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [timeOptions, setTimeOptions] = useState<string[]>([]);
   const [date, setDate] = useState<string>("");
-  const [time, setTime] = useState<string>("");
+  const [time, setTime] = useState<string>("default");
 
   useEffect(() => {
     fetchData().then(setOrders);
@@ -29,23 +29,22 @@ function OrdersForm() {
   const handleTimeChange = (ev: SyntheticEvent) => {
     const target = ev.target as HTMLSelectElement;
 
-    console.log(target.value);
-    
     setTime(target.value);
   }
 
-  const submitForm = () => {
+  const submitForm = (ev: SyntheticEvent) => {
+    ev.preventDefault();
+
     const order: Order = {
-      date,
-      time,
-      customerId: "mock-customer-id"
+      customerId: "mock-customer-id",
+      date, time
     }
 
     placeOrder(order)
   }
 
   return (
-    <div className={styles.container}>
+    <form className={styles.container} onSubmit={submitForm}>
       <input
         className={styles.input}
         onChange={handleDateChange}
@@ -56,7 +55,11 @@ function OrdersForm() {
         className={styles.input}
         disabled={!date}
         onChange={handleTimeChange}
+        defaultValue={time}
       >
+        <option value="default" disabled hidden>
+          Choose delivery time
+        </option>
         {timeOptions.map((option) => {
           return <option value={option} key={option}>{option}</option>
         })}
@@ -64,12 +67,11 @@ function OrdersForm() {
       <div>
         <button
           className={styles.btn}
-          type="button"
-          disabled={!time}
-          onClick={submitForm}
+          type="submit"
+          disabled={!timeOptions.includes(time)}
         >Place order!</button>
       </div>
-    </div>
+    </form>
   );
 }
 
